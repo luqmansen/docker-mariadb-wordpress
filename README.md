@@ -8,6 +8,6 @@ Tested on RHEL 7
 git clone https://github.com/luqmansen/docker-mariadb-wordpress.git
 cd docker-mariadb-wordpress
 bash preinsstall.sh
-bash env.sh
+source env.sh
 docker-compose up
 ```
