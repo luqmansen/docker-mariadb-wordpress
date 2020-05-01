@@ -5,34 +5,31 @@ services:
         container_name: mariadb
         image: docker.io/mariadb:10.5.2-bionic
         environment: 
-            - MYSQL_ROOT_PASSWORD=redhat
-            - MYSQL_DATABASE=wordpress
-            - MYSQL_USER=wordpress
-            - MYSQL_PASSWORD=redhat
+            - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+            - MYSQL_DATABASE=${DB_NAME}
+            - MYSQL_USER=${DB_USER}
+            - MYSQL_PASSWORD=${DB_PASSWORD}
         volumes: 
             - /root/var/lib/mysql:/var/lib/mysql
         networks: 
             - mariadb-wp-privnet
 
     wordpress:
-        container_name: wordpress
         depends_on: 
             - mariadb
+        container_name: wordpress
         image: docker.io/wordpress:5.4.1-php7.2-apache
         environment: 
-            - WORDPRESS_DB_HOST=wordpressdb
-            - WORDPRESS_DB_USER=wordpress
-            - WORDPRESS_DB_PASSWORD=redhat
-            - WORDPRESS_DB_NAME=wordpress
+            - WORDPRESS_DB_HOST=mariadb:3306
+            - WORDPRESS_DB_USER=${DB_USER}
+            - WORDPRESS_DB_PASSWORD=${DB_PASSWORD}
+            - WORDPRESS_DB_NAME=${DB_NAME}
         volumes: 
         - /root/var/www/html:/var/www/html
-        networks: 
-            - mariadb-wp-privnet
         ports: 
             - "80:80"
         networks: 
             - mariadb-wp-privnet
-    
   
 networks: 
     mariadb-wp-privnet:
