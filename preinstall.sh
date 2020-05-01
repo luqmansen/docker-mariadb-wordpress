@@ -14,4 +14,4 @@ docker-compose version
 
 # Open http port in dynamic firewall
 sudo firewall-cmd --permanent --add-service=http
-sudo firewall-cmd -reload
+sudo firewall-cmd --reload
